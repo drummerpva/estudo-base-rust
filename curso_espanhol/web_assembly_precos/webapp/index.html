@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App WebAssembly</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+  <script type="module">
+    import init, {get_coin_price} from "../pkg/web_assembly_precos.js"
+    (async () => {
+      await init();
+      const price_button = document.getElementById("price_button");
+      price_button.addEventListener('click', async ()=> {
+        const input = document.getElementById("coin");
+        const data = await get_coin_price(input.value);
+        const label = document.getElementById("price_label");
+        label.textContent = Number(data).toFixed(2);
+      })
+      console.log("WebAssembly carregado com sucesso!!!");
+    })();
+    /* fetch('../pkg/web_assembly_precos_bg.wasm')
+      .then(response => response.arrayBuffer())
+      .then(bytes => WebAssembly.instantiate(bytes))
+      .then(results => {
+          // Use the exported functions from the WebAssembly module here
+          console.log("WebAssembly carregado com sucesso!");
+      }).catch(console.error); */
+  </script>
+</head>
+<body>
+  <div>
+    <input type="text" name="coin" id="coin" />
+    <button type="button" id="price_button">Buscar</button>
+  </div>
+  <h2 id="price_label"></h2>
+
+</body>
+</html>

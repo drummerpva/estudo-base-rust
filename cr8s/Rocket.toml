@@ -1,0 +1,2 @@
+[default.databases]
+pg_cr8s = { url ="postgres://postgres:postgres@postgres/app_db" }
